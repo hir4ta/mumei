@@ -50,12 +50,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: install task
-        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa # v2.1.0
+        uses: go-task/setup-task@a00fbb05ce67b35648be3c78cbc9fd85354c757e # v2.2.0
         with:
           version: "3.49.1"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -143,7 +143,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # gitleaks needs full history to scan commits; default fetch-depth=1
           # makes its `--first-parent` walk fail with "stderr is not empty".
@@ -158,7 +158,7 @@ jobs:
       # already vetted at PR time and are intentionally skipped.
 
       - name: markdownlint-cli2
-        uses: DavidAnson/markdownlint-cli2-action@8de2aa07cae85fd17c0b35642db70cf5495f1d25 # v24.0.0
+        uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff # v24.2.0
         with:
           globs: |
             **/*.md
@@ -166,7 +166,7 @@ jobs:
           config: .markdownlint-cli2.jsonc
 
       - name: typos
-        uses: crate-ci/typos@bee27e3a4fd1ea2111cf90ab89cd076c870fce14 # v1.48.0
+        uses: crate-ci/typos@4d9c206a77c041268485162b8e2579ad7a5cb9a3 # v1.50.0
 
       - name: shfmt (shell format)
         run: |
@@ -214,7 +214,7 @@ jobs:
       # Both run on every PR (lint-extra is PR-gated). Defense-in-depth is
       # preserved by the weekly full-history rescan in gitleaks.yml.
       - name: trufflehog (secret scan)
-        uses: trufflesecurity/trufflehog@00155c9dc586f34d189adc83d3ac2698c2ec551f # v3.95.8
+        uses: trufflesecurity/trufflehog@20652fbbdefffcdaa493a5bf57ab2ac6b1db715b # v3.97.1
         with:
           path: ./
           # Pin the docker image tag so the action's internal
@@ -322,7 +322,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
           fetch-depth: 0 # merge-base needs the history
@@ -344,12 +344,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: install task
-        uses: go-task/setup-task@01a4adf9db2d14c1de7a560f09170b6e0df736aa # v2.1.0
+        uses: go-task/setup-task@a00fbb05ce67b35648be3c78cbc9fd85354c757e # v2.2.0
         with:
           version: "3.49.1"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -394,16 +394,16 @@ jobs:
       matrix:
         language: [actions]
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v3
+        uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v3
         with:
           languages: ${{ matrix.language }}
           queries: +security-extended
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v3
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v3
         with:
           category: "/language:${{ matrix.language }}"
 
